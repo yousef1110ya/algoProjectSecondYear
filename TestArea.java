@@ -1,6 +1,18 @@
 import java.util.List;
+import java.util.Stack;
 
 public class TestArea {
+    Stack<Character> stack = new Stack();//implemented a stack to add the values and then check them 
+    public  Node importFromString(String text){
+        for (int i =0; i<s.length() ; i++){
+            if(s.charAt(i) == '(' || s.charAt(i) == '['){
+                stack.push(s.charAt(i));
+            }
+    }   
+        }
+        
+
+
     public static boolean canFormBigRectangle(List<Node> Nodes) {
         // لحتى نحنا نحسب المساحة الكلية لكل الصغار مع بعض
         int totalArea = 0;
