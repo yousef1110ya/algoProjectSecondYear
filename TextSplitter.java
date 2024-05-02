@@ -14,7 +14,7 @@ public class TextSplitter {
             String character = matcher.group(1);
             int width = Integer.parseInt(matcher.group(2));
             int height = Integer.parseInt(matcher.group(3));
-
+            
             // Create the separate string for each character
             String result = character + " [" + width + "," + height + "]";
             System.out.println(result);
