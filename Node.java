@@ -3,14 +3,19 @@ public class Node {
     int width;
     Node left;
     Node right;
-    String name;
+    char name;
 
 
-    public Node(String name , int width , int length){
+    public Node(char name , int width , int length){
         this.name = name;
         this.width = width;
         this.length = length;
         
+    }
+    public Node(char name){
+        this.name = name;
+        this.width = 0;
+        this.length = 0;
     }
 
 
