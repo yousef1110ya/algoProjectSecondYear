@@ -1,101 +1,111 @@
 import java.util.Stack;
 
 public class StringFinal {
-    public boolean isRoot(char c){
-        if(c == '|' || c== '-') return true;
-        else return false;
+    //==================================================
+    public static void prettyDisplay(Node result){ 
+        prettyDisplay(result , 0); 
+    } 
+    private static void prettyDisplay(Node node , int level){ 
+        if(node == null) return; 
+ 
+        prettyDisplay(node.right , level +1); 
+ 
+        if(level != 0){ 
+            for(int i=0 ; i<level-1 ; i++){ 
+                System.out.print("|\t\t"); 
+            } 
+            System.out.println("|=====>" + node.name); 
+        }else{ 
+            System.out.println(node.name); 
+        } 
+        prettyDisplay(node.left, level+1); 
     }
-
-    
-    /**
-     * @param input
-     * @return
-     */
-    public Node FullCase(String input){ // case (-----) + (------)
-        input = input.trim();
-        int StartLeft = 0;
-        int EndLeft = 0;
-        int RootIndex = 0;
-        int StartRight = 0;
-        Stack<Character> temp  = new Stack<>();
-        for (int i=0 ; i<input.length();i++){
-            char c = input.charAt(i);
-            char next = input.charAt(i+1);
-            if(c =='('){temp.add(c);}
-            else if (c == ')' && !temp.isEmpty() && isRoot(next)){
-                EndLeft = i;
-                RootIndex = i+1;
-                StartRight = i+2;
-                temp.pop();
-                break;
-            }
-
+    //==================================================
+    public static void main(String[] args) {
+        String str = "(A[20,10] | (B[20,10]|C[30,10])) – (D[30,50] | (E[40,30] – F[40,20]))";
+        Node tree = FullCase(str);
+        prettyDisplay(tree.left.right);
+        if(tree.left.left != null){
+            System.out.println("the right is empty");
         }
-        Node root =  new Node(input.charAt(RootIndex));
-        String left = input.substring(StartLeft+1 , EndLeft);
-        String right = input.substring(RootIndex+1 , input.length());
+    }
+    
+    public static boolean isRoot(char c) {
+        return c == '|' || c == '-';
+    }
+    
+    public static Node FullCase(String ans) {
+        String input = ans.trim();
+        int EndLeft = input.indexOf(')');
+    
+        if (EndLeft == -1) {
+            System.out.println("No closing parenthesis found.");
+            return null;
+        }
+    
+        int RootIndex = EndLeft + 1;
+        int StartRight = EndLeft + 2;
+    
+        Node root = new Node(input.charAt(RootIndex));
+        String left = input.substring(1, EndLeft);
+        String right = input.substring(StartRight, input.length() - 1);
         root.left = SubCase(left);
         root.right = SubCase(right);
-
+    
         return root;
-
-
     }
-    public Node SubCase(String input){//testing all other cases
-        if(input.charAt(1) == '[' && input.indexOf("(") != -1 ){ // val[]+(------)
+    
+    public static Node SubCase(String input) {
+        if (input.charAt(1) == '[' && input.indexOf("(") != -1) {
             return secCase(input);
-        }else if(input.charAt(0) == '(' && input.charAt(input.length()) == ']'){//(-------)+val[]
+        } else if (input.charAt(0) == '(' && input.charAt(input.length() - 1) == ']') {
             return thirdCase(input);
-        }else if (input.indexOf("(") == -1){//va;[]+val[]
+        } else if (input.indexOf("(") == -1) {
             return fourthCase(input);
-        }else if (input.indexOf("(") == 0 && input.charAt(input.length()) == ')'){//(-------)+(--------)
+        } else if (input.indexOf("(") == 0 && input.charAt(input.length() - 1) == ')') {
             return FullCase(input);
-        }else{
+        } else {
             return null;
         }
     }
-
-
-    private Node fourthCase(String input) {
-        int RootIndex = 0;
-        if(input.indexOf("-") == -1)
-        RootIndex = input.indexOf("|");
-        else if(input.indexOf("|") == -1){
-        RootIndex = input.indexOf("-");
+    
+    private static Node fourthCase(String input) {
+        int RootIndex;
+        if (input.indexOf("-") == -1) {
+            RootIndex = input.indexOf("|");
+        } else if (input.indexOf("|") == -1) {
+            RootIndex = input.indexOf("-");
+        } else {
+            return null; // Invalid expression
         }
+    
         Node root = new Node(input.charAt(RootIndex));
         root.left = createNode(input.substring(0, RootIndex));
-        root.right = createNode(input.substring(RootIndex, input.length()));
+        root.right = createNode(input.substring(RootIndex, input.length() - 1));
         return root;
     }
-
-
-    private Node thirdCase(String input) {
+    
+    private static Node thirdCase(String input) {
         int RootIndex = 0;
-        for(int i = input.length();i>0 ; i--){
-            if (input.charAt(i) == '|' || input.charAt(i) == '-' ) {
+        for (int i = input.length() - 1; i > 0; i--) {
+            if (input.charAt(i) == '|' || input.charAt(i) == '-') {
                 RootIndex = i;
                 break;
-                
             }
         }
         Node root = new Node(input.charAt(RootIndex));
-        root.left = createNode(input.substring(RootIndex+1, input.length()));
-        root.right= SubCase(input.substring(0, RootIndex));
+        root.left = createNode(input.substring(RootIndex + 1, input.length() - 1));
+        root.right = SubCase(input.substring(0, RootIndex));
         return root;
     }
-
-
-    private Node secCase(String input) {// case val[] + (--------)
-        // TODO Auto-generated method stub
-        int RootIndex = input.indexOf(']')+1;
+    private static Node secCase(String input) {
+        int RootIndex = input.indexOf(']') + 1;
         Node root = new Node(input.charAt(RootIndex));
         root.left = createNode(input.substring(0,RootIndex));
-        root.right = SubCase(input.substring(RootIndex , input.length()));
+        root.right = SubCase(input.substring(RootIndex , input.length()-1));
         return root;
     }
-    public Node createNode(String substring) {
-        // Extract name, length, and height from the substring
+    public static Node createNode(String substring) {
         int openBracketIndex = substring.indexOf('[');
         int closeBracketIndex = substring.indexOf(']');
         char name = substring.charAt(0);
@@ -103,10 +113,10 @@ public class StringFinal {
         String[] parts = dimensions.split(",");
         int length = Integer.parseInt(parts[0].trim());
         int width = Integer.parseInt(parts[1].trim());
-
         return new Node(name,width,length);
     }
 
 
     
 }
+
