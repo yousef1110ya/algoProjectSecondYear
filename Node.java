@@ -9,6 +9,10 @@ public class Node {
         this.Name = Name;
         children = new LinkedList<>();
     }
+
+    //=========================================================================================================
+    //==================the code to put the tree into a file as a text=========================================
+    //=========================================================================================================
     public String lineCreator() {
         StringBuilder sb = new StringBuilder();
         sb.append(Name).append(" -> ");
@@ -52,7 +56,7 @@ public class Node {
             e.printStackTrace();
         }
     }
-
+    //this main is for testing creating the tree and putting the file inside it
     public static void main(String[] args) {
         // Example usage
         Node root = new Node('A');
@@ -71,5 +75,8 @@ public class Node {
         String treeText = exportedText(root);
         System.out.println(treeText);
         writeStringToFile(treeText);
-}
+    }
+    //===============================================================================================
+    //==========this is the fenish of the file creation =============================================
+    //===============================================================================================
 }
