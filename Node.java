@@ -1,6 +1,12 @@
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Stack;
+
+import javax.swing.tree.TreeNode;
 
 public class Node {
     char Name;
@@ -8,6 +14,41 @@ public class Node {
     public Node(char Name) {
         this.Name = Name;
         children = new LinkedList<>();
+    }
+    private static void prettyDisplay(TreeNodee node , int level){ 
+        if(node == null) return; 
+ 
+        prettyDisplay(node.right , level +1); 
+ 
+        if(level != 0){ 
+            for(int i=0 ; i<level-1 ; i++){ 
+                System.out.print("|\t\t"); 
+            } 
+            System.out.println("|=====>" + node.data); 
+        }else{ 
+            System.out.println(node.data); 
+        } 
+        prettyDisplay(node.left, level+1); 
+    }
+    public void printTree() {
+        printTreeHelper(this, 0);
+    }
+
+    private void printTreeHelper(Node node, int depth) {
+        if (node == null) return;
+
+        // Print indentation based on depth
+        for (int i = 0; i < depth; i++) {
+            System.out.print("  ");
+        }
+
+        // Print the current node's name
+        System.out.println(node.Name);
+
+        // Recursively print children
+        for (Node child : node.children) {
+            printTreeHelper(child, depth + 1);
+        }
     }
 
     //=========================================================================================================
@@ -74,9 +115,137 @@ public class Node {
 
         String treeText = exportedText(root);
         System.out.println(treeText);
-        writeStringToFile(treeText);
+        TreeNodee btree = convertToBinaryTree(root);
+        prettyDisplay(btree , 0);
+
+        //writeStringToFile(treeText);
+        
+        /*Node ans =Importing_File(gettingAllNodes());
+        ans.printTree();*/
     }
     //===============================================================================================
     //==========this is the fenish of the file creation =============================================
     //===============================================================================================
+    
+    public static LinkedList<Node> gettingAllNodes(){
+        LinkedList<Node> all_nodes = new LinkedList<>();
+        LinkedList<Node> anser = new LinkedList<>();
+         try {
+            List<String> allLines = Files.readAllLines(Paths.get("Question2.txt"));
+            for (String line : allLines) {
+                line = line.trim();
+                all_nodes.add(Text_Node(line));
+                //all_nodes = cleaning(all_nodes);
+                //all_nodes = replaceNodes(all_nodes.get(0).children, all_nodes);
+                System.out.println(line);
+            }
+            
+                
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //all_nodes = replaceNodes(all_nodes.get(0).children, all_nodes);
+        return all_nodes;
+    }
+    public static Node Text_Node(String input){
+        Node ans = new Node(input.charAt(0));
+        for(int i=4 ; i<input.length();i++){
+            if (input.charAt(i) == ',' || input.charAt(i) == ' ' || input.charAt(i) == '-' || input.charAt(i) == '>')  {
+               continue;
+            }else{
+                ans.children.add(new Node(input.charAt(i)));
+            }
+        }
+        for (Node node : ans.children) {
+            System.out.println("the children nodes are  " + node.Name);
+        }
+        return ans;
+    }
+    public static LinkedList<Node> replaceNodes(LinkedList<Node> childreno, LinkedList<Node> all) {
+        for (Node node1 : childreno) {
+            for (Node node2 : all) {
+                if (node1.Name == node2.Name && !node2.children.isEmpty()) {
+                    // Replace node1 with node2
+                    childreno.remove(node1);
+                    childreno.add(node2);
+                    //break; // No need to continue searching
+                }
+            }
+        }
+        for (Node node : childreno) {
+            if (!node.children.isEmpty()) {
+                node.children = replaceNodes(node.children, all);
+                return node.children;
+            }
+        }
+        return childreno;
+        
+    }
+    /*public static Node Get_the_Node(Node current_Node ,LinkedList<Node> all_nodes){
+        for (Node node : current_Node.children) {
+            for (Node node2 : all_nodes) {
+                if (node.Name == node2.Name && !node2.children.isEmpty()) {
+                    current_Node = Get_the_Node(node2, all_nodes) ;
+                }
+            }   
+        }
+        return current_Node;
+    }*/
+    public static Node Get_the_Node(Node current_Node, LinkedList<Node> all_nodes) {
+        if (current_Node.children.isEmpty()) {
+            return current_Node;
+        }
+        for (Node node : current_Node.children) {
+            for (Node node2 : all_nodes) {
+                if (node.Name == node2.Name ) {
+                    // Recursively search for the node
+                    current_Node = Get_the_Node(node2, all_nodes);
+                }
+            }
+        }
+        return current_Node;
+    }
+    
+    public static Node Importing_File(LinkedList<Node> all_nodes){
+        for (Node node : all_nodes) {
+            System.out.println("======" + node.Name);
+        }
+        Node root = all_nodes.get(0);
+        int index = 1;
+        for (Node node : root.children) {
+            for (Node node2 : all_nodes) {
+                if (node.Name == node2.Name) {
+                    root.children.set(index, node2);
+                }
+            }
+        }
+        return root;
+    }
+    //================================================================================================================
+    //==============this code is for turning the Nary tree into a binary tree ========================================
+    //================================================================================================================
+    public static TreeNodee convertToBinaryTree(Node naryRoot) {
+        if (naryRoot == null) {
+            return null;
+        }
+        TreeNodee binaryRoot = new TreeNodee(naryRoot.Name);
+
+        if (!naryRoot.children.isEmpty()) {
+            binaryRoot.right = convertToBinaryTree(naryRoot.children.getFirst());
+        }
+
+        TreeNodee currentBinaryNode = binaryRoot.right;
+        for (int i = 1; i < naryRoot.children.size(); i++) {
+            currentBinaryNode.left = convertToBinaryTree(naryRoot.children.get(i));
+            currentBinaryNode = currentBinaryNode.left;
+        }
+
+        return binaryRoot;
+    }
+
+
+
+
+
+
 }
