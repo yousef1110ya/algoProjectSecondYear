@@ -41,12 +41,13 @@ public class SwingEx {
         Proot.add(parent1);
         Proot.add(parent2);
         JTree tree = new JTree(Proot);*/
+        
         frame.add(new JScrollPane(tree));
         frame.setSize(400, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
-     static void convertToJTree(Node node, DefaultMutableTreeNode jNode) {
+    static void convertToJTree(Node node, DefaultMutableTreeNode jNode) {
         jNode.setUserObject(node.Name); // Set the value as the user object
 
         for (Node child : node.children) {

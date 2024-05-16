@@ -130,20 +130,7 @@ public class Node {
     public static LinkedList<Node> gettingAllNodes(){
         LinkedList<Node> all_nodes = new LinkedList<>();
         LinkedList<Node> anser = new LinkedList<>();
-         try {
-            List<String> allLines = Files.readAllLines(Paths.get("Question2.txt"));
-            for (String line : allLines) {
-                line = line.trim();
-                all_nodes.add(Text_Node(line));
-                //all_nodes = cleaning(all_nodes);
-                //all_nodes = replaceNodes(all_nodes.get(0).children, all_nodes);
-                System.out.println(line);
-            }
-            
-                
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+          
         //all_nodes = replaceNodes(all_nodes.get(0).children, all_nodes);
         return all_nodes;
     }
