@@ -129,7 +129,7 @@ public class Node {
     
     public static LinkedList<Node> gettingAllNodes(){
         LinkedList<Node> all_nodes = new LinkedList<>();
-        LinkedList<Node> anser = new LinkedList<>();
+        LinkedList<Node> awnser = new LinkedList<>();
           
         //all_nodes = replaceNodes(all_nodes.get(0).children, all_nodes);
         return all_nodes;

@@ -3,7 +3,7 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SecondQ {
+public class SecondQ {/*
     public static void prettyDisplay(Node result){ 
         prettyDisplay(result , 0); 
     } 
@@ -22,7 +22,7 @@ public class SecondQ {
         } 
         prettyDisplay(node.left, level+1); 
     }
-
+/*
     public static void main(String[] args) {
         String input = "(A[20,10] | (B[20,10]|C[30,10])) – (D[30,50] | (E[40,30] – F[40,20]))";
         Node result = splitIndex(input);
@@ -33,7 +33,7 @@ public class SecondQ {
      * @param input
      * @return
      */
-    public static Node splitIndex(String input) {
+   /* public static Node splitIndex(String input) {
         int firstOpenParen = input.indexOf('(');
         //int firstOpenParen = 0;
         int firstCloseParen = input.indexOf(')');
@@ -88,6 +88,6 @@ public class SecondQ {
         int height = Integer.parseInt(parts[1].trim());
 
         return new Node(name, length, height);
-    }
+    }*/
     
 }

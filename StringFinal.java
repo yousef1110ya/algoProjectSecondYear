@@ -24,7 +24,7 @@ public class StringFinal {
     public static void main(String[] args) {
         String str = "(A[20,10] | (B[20,10]|C[30,10])) – (D[30,50] | (E[40,30] – F[40,20]))";
         Node tree = FullCase(str);
-        prettyDisplay(tree.left.right);
+        prettyDisplay(tree);
         if(tree.left.left != null){
             System.out.println("the right is empty");
         }
@@ -49,9 +49,10 @@ public class StringFinal {
         Node root = new Node(input.charAt(RootIndex));
         String left = input.substring(1, EndLeft);
         String right = input.substring(StartRight, input.length() - 1);
-        root.left = SubCase(left);
+        
         root.right = SubCase(right);
-    
+        root.left = SubCase(left);
+
         return root;
     }
     
@@ -80,8 +81,9 @@ public class StringFinal {
         }
     
         Node root = new Node(input.charAt(RootIndex));
-        root.left = createNode(input.substring(0, RootIndex));
         root.right = createNode(input.substring(RootIndex, input.length() - 1));
+        root.left = createNode(input.substring(0, RootIndex));
+        
         return root;
     }
     
@@ -94,8 +96,8 @@ public class StringFinal {
             }
         }
         Node root = new Node(input.charAt(RootIndex));
-        root.left = createNode(input.substring(RootIndex + 1, input.length() - 1));
-        root.right = SubCase(input.substring(0, RootIndex));
+        root.right = createNode(input.substring(RootIndex + 1, input.length() - 1));
+        root.left = SubCase(input.substring(0, RootIndex));
         return root;
     }
     private static Node secCase(String input) {

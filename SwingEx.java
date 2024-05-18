@@ -1,3 +1,4 @@
+import java.awt.Dimension;
 import java.util.LinkedList;
 
 import javax.swing.*;
@@ -41,9 +42,19 @@ public class SwingEx {
         Proot.add(parent1);
         Proot.add(parent2);
         JTree tree = new JTree(Proot);*/
+        JButton button = new JButton("Click Me");
+
+        // Create a panel to hold the tree and button
+        JPanel panel = new JPanel();
+        panel.setPreferredSize(new Dimension(500, 400));
+        //panel.add(new JScrollPane(tree)); // Add the tree with a scroll pane
+        panel.add(tree);
+        panel.add(button); // Add the button
+
+        frame.add(panel);
         
-        frame.add(new JScrollPane(tree));
-        frame.setSize(400, 400);
+        //frame.add(new JScrollPane(tree));
+        frame.setSize(800, 800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
