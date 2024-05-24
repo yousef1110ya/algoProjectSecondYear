@@ -47,11 +47,11 @@ public class TestArea {
 
     public static void main(String[] args) {
         
-        List<Node> rectangles = List.of(
-            new Node('R', 4, 4),
-            new Node('e', 4, 3),
-            new Node('t', 4, 4),
-            new Node('q', 3, 4)
+        List<RNode> rectangles = List.of(
+            new RNode('R', 4, 4),
+            new RNode('e', 4, 3),
+            new RNode('t', 4, 4),
+            new RNode('q', 3, 4)
         );
 
         boolean canForm = canFormRectangle(rectangles);
@@ -59,7 +59,7 @@ public class TestArea {
     }
   
    /* Stack<Character> stack = new Stack();//implemented a stack to add the values and then check them 
-    public  Node importFromString(String text){
+    public  RNode importFromString(String text){
         for (int i =0; i<s.length() ; i++){
             if(s.charAt(i) == '(' || s.charAt(i) == '['){
                 stack.push(s.charAt(i));
@@ -74,26 +74,26 @@ public class TestArea {
      */
    /* public static void main(String[] args) {
         // Example usage
-        List<Node> rectangles = List.of(
-            new Node('R', 4, 4),
-            new Node('e', 4, 4),
-            new Node('t', 3, 4),
-            new Node('q', 4, 4)
+        List<RNode> rectangles = List.of(
+            new RNode('R', 4, 4),
+            new RNode('e', 4, 4),
+            new RNode('t', 3, 4),
+            new RNode('q', 4, 4)
         );
         
 
         boolean canForm = canFormRectangle(rectangles);
         System.out.println("Can form a rectangle: " + canForm);
     }*/
-    public static boolean canFormRectangle(List<Node> Nodes){
+    public static boolean canFormRectangle(List<RNode> Nodes){
         int big_Width = 0;
         int big_Height = 0;
-        int index;
-        int available_Height,available_Width;
-        List<Node> Aside = new LinkedList<>();
-        for (Node node : Nodes) {
+        int index;//ما استعملتو ابدا
+        int available_Height,available_Width;//كمان ما استعملتو
+        List<RNode> Aside = new LinkedList<>();
+        for (RNode node : Nodes) {
             if(big_Height == 0 ){
-                System.out.println("made the width and height");
+                System.out.println("made the width and height for the first list so we can add to its value");
                 big_Height += node.length;
                 big_Width += node.width;
                 continue;
@@ -115,7 +115,7 @@ public class TestArea {
             }
         }
         
-        Node Small_Rec = new Node();
+        RNode Small_Rec = new RNode();
         if (!Aside.isEmpty()) {
             Small_Rec = Can_Form(Aside);
             Aside.removeAll(Aside);
@@ -132,14 +132,14 @@ public class TestArea {
         }
         return false;
     }
-    private static Node Can_Form(List<Node> aside) {
+    private static RNode Can_Form(List<RNode> aside) {
         int width =0;int height =0 ;
         if(canFormRectangle(aside)){
-            for (Node node : aside) {
+            for (RNode node : aside) {
                 width += node.width;
                 height += node.length;
             }
-            return new Node(aside.get(0).name, width , height);
+            return new RNode(aside.get(0).name, width , height);
         }
         return null;   
     }

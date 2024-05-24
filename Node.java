@@ -54,7 +54,11 @@ public class Node {
     //=========================================================================================================
     //==================the code to put the tree into a file as a text=========================================
     //=========================================================================================================
+
+
+
     public String lineCreator() {
+
         StringBuilder sb = new StringBuilder();
         sb.append(Name).append(" -> ");
         for (Node son : children) {
@@ -110,8 +114,8 @@ public class Node {
         root.children.add(b);
         root.children.add(c);
         root.children.add(d);
-        d.children.add(j);
-        j.children.add(k);
+        //d.children.add(j);
+        //j.children.add(k);
 
         String treeText = exportedText(root);
         System.out.println(treeText);

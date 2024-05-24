@@ -1,21 +1,21 @@
 public class RNode {
     char name;
-    int height;
+    int length;
     int width;
     RNode left;
     RNode right;
 
     public RNode(){}
-    public RNode(char name,int height,int width){
+    public RNode(char name,int length,int width){
         this.name=name;
-        this.height=height;
+        this.length=length;
         this.width=width;
         left=right=null;
     }
     public RNode(char name){
         this.name=name;
     }
-    public int sub_width(RNode root){
+    /*public int sub_width(RNode root){
         int width = 0;
         int height =0;
         if (root.name == '|') {
@@ -25,5 +25,5 @@ public class RNode {
         else if (root.name == '_') {
             return 0;
         }
-    }
+    }*/
 }
