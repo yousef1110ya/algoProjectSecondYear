@@ -1,0 +1,4 @@
+what is done :
+    1- putting string inside a file
+    2- converting to a binary tree
+    3- reading the nodes from the file
