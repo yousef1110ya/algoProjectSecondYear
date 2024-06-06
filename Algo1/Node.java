@@ -12,6 +12,9 @@ public class Node {
     Node right;
 
     public Node(){}
+    public char getName(){
+        return this.name.charAt(0);
+    }
     public Node(String name,int height,int width){
         this.name=name;
         this.height=height;
